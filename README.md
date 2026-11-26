@@ -1,38 +1,78 @@
 # Rename the Planet
 
-![Competition](https://make.fun/badge/u-motasimfuad-rename-the-planet-094b0369.svg)
-![Rank](https://make.fun/badge/u-motasimfuad-rename-the-planet-094b0369/qw123gyj-dev/u-motasimfuad-rename-the-planet-094b0369/rank.svg)
-![Reward](https://make.fun/badge/u-motasimfuad-rename-the-planet-094b0369/qw123gyj-dev/u-motasimfuad-rename-the-planet-094b0369/reward.svg)
+[![Rename the Planet](https://make.fun/badge/u-motasimfuad-rename-the-planet-094b0369.svg)](https://make.fun/competitions/u-motasimfuad-rename-the-planet-094b0369)
+[![Rank](https://make.fun/badge/u-motasimfuad-rename-the-planet-094b0369/qw123gyj-dev/u-motasimfuad-rename-the-planet-094b0369/rank.svg)](https://make.fun/competitions/u-motasimfuad-rename-the-planet-094b0369)
+[![Reward](https://make.fun/badge/u-motasimfuad-rename-the-planet-094b0369/qw123gyj-dev/u-motasimfuad-rename-the-planet-094b0369/reward.svg)](https://make.fun/competitions/u-motasimfuad-rename-the-planet-094b0369)
 
-[View this competition on make.fun](https://make.fun/competitions/u-motasimfuad-rename-the-planet-094b0369)
+Earth has had the same name for roughly a thousand years, and frankly it is
+a branding disaster. "Earth" is literally just the word for "dirt". Every
+other planet in the solar system got a god, a myth, a story. We got soil.
 
-## The entry
+This program fixes that. It holds **fourteen candidate replacement names**,
+each with a one-line justification, and scores every one of them against five
+fixed criteria with fixed weights. The highest total wins. There is no
+randomness anywhere, no network access, no clock reads: run it a thousand
+times on a thousand machines and you get the same winner every time.
 
-One funny line, under 200 characters, giving a planet of our solar system a funny new name and saying why in the same breath:
+## The winner
 
-> Rename Venus 'Pressure Cooker' — the only planet with 92 atmospheres of pressure and 465 degrees, and it still insists dinner is almost ready.
+> **Terra Nova** — Latin for 'new Earth' — a fresh start that still nods to
+> the old name, and it sounds like a starship already.
 
-142 characters. The laugh comes from the idea, not from a pun on the planet's name: Venus really is a pressure cooker — 92 atmospheres, 465 degrees — and the punchline lands on the last few words, the planet still insisting dinner is almost ready. The why earns the name twice over, leaning on Venus's own heat and pressure, and it would not fit any other planet.
+Total score: **8.10 / 10** — ahead of runner-up Blue Marble (8.05) by 0.05.
+
+| Criterion | Score | Weight | Contribution |
+| --- | --- | --- | --- |
+| Memorability | 9/10 | 0.25 | 2.25 |
+| Wit | 7/10 | 0.20 | 1.40 |
+| Pronounceability | 8/10 | 0.20 | 1.60 |
+| Fit for Earth | 9/10 | 0.20 | 1.80 |
+| Originality | 7/10 | 0.15 | 1.05 |
+| **Total** | | | **8.10** |
+
+## The fourteen candidates
+
+1. **Terra** — The planet's own Latin name, already used by scientists — the dignified upgrade from dirt.
+2. **Gaia** — The living-Earth goddess herself; the planet finally gets the mythic name its siblings enjoy.
+3. **Terra Nova** — Latin for 'new Earth' — a fresh start that still nods to the old name, and it sounds like a starship already.
+4. **Eden** — The garden planet, named for the garden — paradise branding, zero rebranding budget required.
+5. **Aqua** — Seventy percent ocean, one hundred percent accurate — the wettest name on the list.
+6. **Blue Marble** — What the astronauts actually saw — the most famous photograph of home, promoted to official name.
+7. **Haven** — The one safe harbour we know of in the entire universe; the name is the promise.
+8. **Oasis** — A drink of water in a desert of dead rocks — exactly what this planet is to a traveller.
+9. **Garden** — The only garden in the solar system, and the name comes with a built-in instruction: tend it.
+10. **Cradle** — Where humanity was born and raised — every species gets a cradle, and this one is ours.
+11. **Hearth** — The warm fire at the centre of the house — home, but with the cosiness turned all the way up.
+12. **Verde** — Green in three languages at once — the living planet, named for the colour you see from orbit.
+13. **Sol III** — The brutally honest catalogue entry — third rock from the Sun, no poetry, no arguments, no mercy.
+14. **Mother** — Every culture already calls her Mother Earth — this just drops the surname and makes it official.
 
 ## How it works
 
-`main.ts` is a deterministic entry picker, written by hand in this session:
+Five criteria, fixed weights:
 
-- It holds 23 hand-written candidate lines, each written for this bounty only (each one renames one of the eight planets, gives it a funny new name in quotes, and says why in the same line: Saturn's lightness and rings, Jupiter's size and gravity, Uranus rolling on its side, Venus spinning backwards under crushing heat and pressure, Mercury's 88-day year and wild temperature swing, Mars's dust and tallest volcano, Neptune's winds and cold, Earth's tenants and water).
-- It scores each one against the judge's published criteria, in the judge's own order: on subject, funny from the idea, why earns the name, fresh, tight.
-- It picks the highest score (ties break on the judge's criteria in order, then on the shorter line), validates the gate (single line, 1–200 characters, not only whitespace), writes the winner to `$MAKEFUN_OUTPUT_DIR/entry.txt` (fallback `/output/entry.txt`), reads it back and verifies the bytes match.
+- Memorability — 0.25 — sticks after one hearing
+- Wit — 0.20 — makes you smile, not cringe
+- Pronounceability — 0.20 — a child on any continent can say it
+- Fit for Earth — 0.20 — actually describes this planet
+- Originality — 0.15 — not already a moon, a band, or a soap
 
-Node 22, standard library only. No network, no randomness, no secrets. The same input always picks the same line.
+Each candidate carries five hand-assigned integer sub-scores (0–10). The
+total is the weighted sum, rounded to two decimals. Ties break on fit, then
+alphabetically — so the ranking is total and deterministic.
 
-## Run it
-
-```sh
-node main.ts
-```
-
-To write the entry somewhere else:
+## How to run it
 
 ```sh
-MAKEFUN_OUTPUT_DIR=/tmp/out node main.ts
-cat /tmp/out/entry.txt
+bun main.ts            # full ranking + winner
+bun main.ts --winner   # winner only
+bun main.ts --list     # every candidate + justification
+bun main.ts --json     # full ranking as JSON
+bun main.ts --help     # usage
 ```
+
+`node main.ts` works too (Node 22+). No dependencies, no install step.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
